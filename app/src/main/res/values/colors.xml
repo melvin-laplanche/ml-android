@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#795548</color>
+    <color name="colorPrimaryDark">#5D4037</color>
+    <color name="colorAccent">#536DFE</color>
+
+    <!-- Fonts -->
+    <color name="font_light_on_white">#B3B3B3</color>
+    <color name="font_regular_on_white">#555555</color>
+    <color name="font_dark_on_white">#404040</color>
+
+    <color name="font_selected_item_on_white">#0087CC</color>
+    <color name="font_link_on_white">#5BB2DD</color>
+    <color name="font_error_on_white">#E57B72</color>
+    <color name="font_success_on_white">#34A767</color>
+
+    <color name="font_regular_on_color">#FFFFFF</color>
+    <color name="font_dark_on_color">#CFD8DC</color>
+
+    <!-- Background -->
+    <color name="background_lighter">#FFFFFF</color>
+    <color name="background_light">#FCFCFC</color>
+    <color name="background_regular">#F5F5F5</color>
+    <color name="background_dark">#EFEFEF</color>
+
+    <color name="background_black_lighter">#404040</color>
+    <color name="background_black">#222222</color>
+
+    <!-- Ripples -->
+    <color name="background_regular_ripple">#C5C6C9</color>
+
+    <!-- Action -->
+    <color name="action_light">#8D6E63</color>
+    <color name="action_dark">#795548</color>
+</resources>
