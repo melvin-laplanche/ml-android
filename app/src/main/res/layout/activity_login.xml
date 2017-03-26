@@ -81,10 +81,10 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/sign_up_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:onClick="signUp"
                         android:text="@string/action_sign_up"
                         android:textAlignment="center" />
 

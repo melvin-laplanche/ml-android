@@ -17,6 +17,9 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import la.melvin.mobile.DoneCallback;
 import la.melvin.mobile.R;
 import la.melvin.mobile.api.APIError;
@@ -32,8 +35,6 @@ import la.melvin.mobile.users.models.UserCredentials;
 import la.melvin.mobile.utils.Validation;
 import retrofit2.Retrofit;
 
-import static la.melvin.mobile.R.id.email;
-
 
 /**
  * A login screen that offers login via email/password.
@@ -45,13 +46,15 @@ public class LoginActivity extends BaseActivity {
     Retrofit mRetrofit;
 
     // Form Fields
-    private EditText mEmail;
-    private EditText mPassword;
-    private View mSignInButton;
-    private View mMainLayout;
+    @BindView(R.id.email) EditText mEmail;
+    @BindView(R.id.password) EditText mPassword;
+    @BindView(R.id.main_layout) View mMainLayout;
+
+    // Action buttons
+    @BindView(R.id.sign_in_button) View mSignInButton;
 
     // Loader
-    private FrameLayout mLoaderView;
+    @BindView(R.id.loader_view) FrameLayout mLoaderView;
     private boolean mIsLoading;
     private BasicMotionEvent mLatestEvent;
 
@@ -63,15 +66,8 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         addActionbar();
 
-        injectDependencies();
-        bindData();
+        bindAndInject();
 
-        mMainLayout = findViewById(R.id.main_layout);
-
-        mLoaderView = (FrameLayout) findViewById(R.id.loader_view);
-        mEmail = (EditText) findViewById(email);
-
-        mSignInButton = findViewById(R.id.sign_in_button);
         mSignInButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent e) {
@@ -82,7 +78,6 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
-        mPassword = (EditText) findViewById(R.id.password);
         mPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -95,13 +90,14 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    private void injectDependencies() {
-        getApp().getApiComponent().inject(this);
-    }
 
-    private void bindData() {
+    private void bindAndInject() {
+        getApp().getApiComponent().inject(this);
+
         ActivityLoginBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         binding.setCreds(mCreds);
+
+        ButterKnife.bind(this);
     }
 
     /**
@@ -167,6 +163,7 @@ public class LoginActivity extends BaseActivity {
 
     }
 
+    @OnClick(R.id.sign_up_button)
     public void signUp(View v) {
         new ActivityTransition(SignUpActivity.class).setSource(this).start();
     }
