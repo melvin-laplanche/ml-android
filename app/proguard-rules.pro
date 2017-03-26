@@ -30,3 +30,5 @@
 -keepattributes Signature # Retain generic type information for use by reflection by converters and adapters.
 -keepattributes Exceptions # Retain declared checked exceptions for use by a Proxy instance.
 -dontwarn okio.**
+# retrolambda
+-dontwarn java.lang.invoke.*

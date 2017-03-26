@@ -98,6 +98,7 @@
             <task name="javaPreCompileStagingDebugUnitTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="javaPreCompileProductionDebug" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="dataBindingExportBuildInfoProductionRelease" type="com.android.build.gradle.internal.tasks.databinding.DataBindingExportBuildInfoTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithRetrolambdaForProductionDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="compileStagingDebugAndroidTestAidl" type="com.android.build.gradle.tasks.AidlCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="javaPreCompileProductionDebugUnitTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="test">Run unit tests for all variants.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
@@ -146,9 +147,11 @@
             <task name="dataBindingProcessLayoutsProductionRelease" type="com.android.build.gradle.internal.tasks.databinding.DataBindingProcessLayoutsTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="cleanIdea">Cleans IDEA project files (IML, IPR)&lt;p&gt;&lt;i&gt;Task group: IDE&lt;i&gt;</task>
             <task name="transformClassesWithDexBuilderForProductionDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithRetrolambdaForStagingDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="transformResourcesWithMergeJavaResForStagingRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="compileStagingDebugAndroidTestNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="processProductionReleaseResources" type="com.android.build.gradle.tasks.ProcessAndroidResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithRetrolambdaForStagingDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="javaPreCompileStagingReleaseUnitTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="prepareProductionDebugDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="preProductionDebugAndroidTestBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
@@ -182,6 +185,7 @@
             <task name="crashlyticsUploadDistributionStagingRelease">Uploads an APK to Crashlytics for distribution.&lt;p&gt;&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="model" type="org.gradle.api.reporting.model.ModelReport">Displays the configuration model of root project 'ml-android'. [incubating]&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
             <task name="tasks" type="org.gradle.api.tasks.diagnostics.TaskReportTask">Displays the tasks runnable from root project 'ml-android' (some of the displayed tasks may belong to subprojects).&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
+            <task name="compileRetrolambda">Converts all java 8 class files to java 6 or 7&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
             <task name="transformResourcesWithMergeJavaResForProductionReleaseUnitTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="init" type="org.gradle.buildinit.tasks.InitBuild">Initializes a new Gradle build. [incubating]&lt;p&gt;&lt;i&gt;Task group: Build Setup&lt;i&gt;</task>
             <task name="testStagingReleaseUnitTest" type="com.android.build.gradle.tasks.factory.AndroidUnitTest">Run unit tests for the stagingRelease build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
@@ -199,6 +203,7 @@
             <task name="preStagingReleaseBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="buildNeeded">Assembles and tests this project and all projects it depends on.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
             <task name="javaPreCompileProductionRelease" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithRetrolambdaForProductionRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="generateProductionReleaseBuildConfig" type="com.android.build.gradle.tasks.GenerateBuildConfig">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="jarProductionReleaseClasses" type="com.android.build.gradle.tasks.AndroidJarTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="checkStagingReleaseManifest" type="com.android.build.gradle.internal.tasks.CheckManifest">&lt;i&gt;Task group: other&lt;i&gt;</task>
@@ -209,6 +214,7 @@
             <task name="crashlyticsUploadDistributionProductionRelease">Uploads an APK to Crashlytics for distribution.&lt;p&gt;&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="packageProductionDebug" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="cleanIdeaModule" type="org.gradle.api.tasks.Delete">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithRetrolambdaForProductionDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="lintProductionRelease" type="com.android.build.gradle.tasks.Lint">Runs lint on the ProductionRelease build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
             <task name="transformDexArchiveWithDexMergerForProductionDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="processStagingReleaseJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
@@ -316,6 +322,7 @@
             <task name="incrementalStagingDebugJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="packageStagingDebugAndroidTest" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="compileProductionDebugNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithRetrolambdaForStagingRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="build">Assembles and tests this project.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
             <task name="resolveStagingReleaseUnitTestDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="incrementalProductionDebugJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
@@ -332,6 +339,7 @@
             <ext name="reporting" type="org.gradle.api.reporting.ReportingExtension" />
             <ext name="android" type="com.android.build.gradle.AppExtension" />
             <ext name="crashlytics" type="com.crashlytics.tools.gradle.CrashlyticsExtension" />
+            <ext name="retrolambda" type="me.tatarka.RetrolambdaExtension" />
             <task name="compileProductionDebugAndroidTestNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="mergeStagingDebugAssets" type="com.android.build.gradle.tasks.MergeSourceSetFolders">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="projects" type="org.gradle.api.tasks.diagnostics.ProjectReportTask">Displays the sub-projects of project ':app'.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
@@ -423,6 +431,7 @@
             <task name="javaPreCompileStagingDebugUnitTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="javaPreCompileProductionDebug" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="dataBindingExportBuildInfoProductionRelease" type="com.android.build.gradle.internal.tasks.databinding.DataBindingExportBuildInfoTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithRetrolambdaForProductionDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="compileStagingDebugAndroidTestAidl" type="com.android.build.gradle.tasks.AidlCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="javaPreCompileProductionDebugUnitTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="test">Run unit tests for all variants.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
@@ -470,9 +479,11 @@
             <task name="dataBindingProcessLayoutsProductionRelease" type="com.android.build.gradle.internal.tasks.databinding.DataBindingProcessLayoutsTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="cleanIdea">Cleans IDEA project files (IML, IPR)&lt;p&gt;&lt;i&gt;Task group: IDE&lt;i&gt;</task>
             <task name="transformClassesWithDexBuilderForProductionDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithRetrolambdaForStagingDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="transformResourcesWithMergeJavaResForStagingRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="compileStagingDebugAndroidTestNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="processProductionReleaseResources" type="com.android.build.gradle.tasks.ProcessAndroidResources">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithRetrolambdaForStagingDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="javaPreCompileStagingReleaseUnitTest" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="prepareProductionDebugDependencies" type="com.android.build.gradle.internal.tasks.PrepareDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="preProductionDebugAndroidTestBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
@@ -505,6 +516,7 @@
             <task name="compileStagingDebugUnitTestJavaWithJavac" type="com.android.build.gradle.tasks.factory.AndroidJavaCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="crashlyticsUploadDistributionStagingRelease">Uploads an APK to Crashlytics for distribution.&lt;p&gt;&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="model" type="org.gradle.api.reporting.model.ModelReport">Displays the configuration model of project ':app'. [incubating]&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
+            <task name="compileRetrolambda">Converts all java 8 class files to java 6 or 7&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
             <task name="tasks" type="org.gradle.api.tasks.diagnostics.TaskReportTask">Displays the tasks runnable from project ':app'.&lt;p&gt;&lt;i&gt;Task group: help&lt;i&gt;</task>
             <task name="transformResourcesWithMergeJavaResForProductionReleaseUnitTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="testStagingReleaseUnitTest" type="com.android.build.gradle.tasks.factory.AndroidUnitTest">Run unit tests for the stagingRelease build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
@@ -522,6 +534,7 @@
             <task name="preStagingReleaseBuild">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="buildNeeded">Assembles and tests this project and all projects it depends on.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
             <task name="javaPreCompileProductionRelease" type="com.android.build.gradle.tasks.JavaPreCompileTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithRetrolambdaForProductionRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="generateProductionReleaseBuildConfig" type="com.android.build.gradle.tasks.GenerateBuildConfig">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="jarProductionReleaseClasses" type="com.android.build.gradle.tasks.AndroidJarTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="checkStagingReleaseManifest" type="com.android.build.gradle.internal.tasks.CheckManifest">&lt;i&gt;Task group: other&lt;i&gt;</task>
@@ -532,6 +545,7 @@
             <task name="crashlyticsUploadDistributionProductionRelease">Uploads an APK to Crashlytics for distribution.&lt;p&gt;&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="packageProductionDebug" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="cleanIdeaModule" type="org.gradle.api.tasks.Delete">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithRetrolambdaForProductionDebugAndroidTest" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="lintProductionRelease" type="com.android.build.gradle.tasks.Lint">Runs lint on the ProductionRelease build.&lt;p&gt;&lt;i&gt;Task group: verification&lt;i&gt;</task>
             <task name="transformDexArchiveWithDexMergerForProductionDebug" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="processStagingReleaseJavaRes" type="org.gradle.api.tasks.Sync">&lt;i&gt;Task group: other&lt;i&gt;</task>
@@ -637,6 +651,7 @@
             <task name="incrementalStagingDebugJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="packageStagingDebugAndroidTest" type="com.android.build.gradle.tasks.PackageApplication">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="compileProductionDebugNdk" type="com.android.build.gradle.tasks.NdkCompile">&lt;i&gt;Task group: other&lt;i&gt;</task>
+            <task name="transformClassesWithRetrolambdaForStagingRelease" type="com.android.build.gradle.internal.pipeline.TransformTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="build">Assembles and tests this project.&lt;p&gt;&lt;i&gt;Task group: build&lt;i&gt;</task>
             <task name="resolveStagingReleaseUnitTestDependencies" type="com.android.build.gradle.internal.tasks.ResolveDependenciesTask">&lt;i&gt;Task group: other&lt;i&gt;</task>
             <task name="incrementalProductionDebugJavaCompilationSafeguard" type="com.android.build.gradle.tasks.factory.IncrementalSafeguard">&lt;i&gt;Task group: other&lt;i&gt;</task>
@@ -747,6 +762,7 @@
             <conf name="releaseJackPlugin" visible="false">Classpath for the 'release' Jack plugins.</conf>
             <conf name="releaseProvided" visible="false">Classpath for only compiling the release sources.</conf>
             <conf name="releaseWearApp" visible="false">Link to a wear app to embed for object 'release'.</conf>
+            <conf name="retrolambdaConfig" />
             <conf name="stagingAnnotationProcessor" visible="false">Classpath for the annotation processor for 'staging'.</conf>
             <conf name="stagingApk" visible="false">Classpath packaged with the compiled 'staging' classes.</conf>
             <conf name="stagingCompile" visible="false">Classpath for compiling the staging sources.</conf>

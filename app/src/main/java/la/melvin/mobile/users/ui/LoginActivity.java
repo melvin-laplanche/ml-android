@@ -7,13 +7,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import javax.inject.Inject;
 
@@ -68,28 +66,22 @@ public class LoginActivity extends BaseActivity {
 
         bindAndInject();
 
-        mSignInButton.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent e) {
-                if (!mIsLoading && e.getAction() == MotionEvent.ACTION_UP) {
+
+        mSignInButton.setOnTouchListener((View v, MotionEvent e) -> {
+            if (!mIsLoading && e.getAction() == MotionEvent.ACTION_UP) {
                     signIn(v, e);
                 }
                 return true;
-            }
         });
 
-        mPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    signIn(mSignInButton, null);
-                    return true;
-                }
-                return false;
+        mPassword.setOnEditorActionListener((textView, id, keyEvent) -> {
+            if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                signIn(mSignInButton, null);
+                return true;
             }
+            return false;
         });
     }
-
 
     private void bindAndInject() {
         getApp().getApiComponent().inject(this);
