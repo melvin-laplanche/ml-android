@@ -1,4 +1,4 @@
-package la.melvin.mobile.users;
+package la.melvin.mobile.users.models;
 
 /**
  * Created by melvin on 3/11/17.

@@ -1,4 +1,4 @@
-package la.melvin.mobile.users;
+package la.melvin.mobile.users.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

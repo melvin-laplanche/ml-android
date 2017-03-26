@@ -1,14 +1,15 @@
-package la.melvin.mobile.users;
+package la.melvin.mobile.users.models;
 
 
 import android.content.Context;
 import android.text.TextUtils;
 
 import la.melvin.mobile.R;
-import la.melvin.mobile.api.API;
+import la.melvin.mobile.users.UserApiRequests;
 import la.melvin.mobile.utils.Validation;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Retrofit;
 
 /**
  * Created by melvin on 3/12/17.
@@ -69,8 +70,8 @@ public class UserCredentials {
      * SignIn sends an API request to sign the user in using the
      * provided credentials
      */
-    public Call<Session> SignIn(Callback<Session> responseCallback) {
-        UserEndpoints client = API.createService(UserEndpoints.class);
+    public Call<Session> SignIn(Retrofit retrofit, Callback<Session> responseCallback) {
+        UserApiRequests client = retrofit.create(UserApiRequests.class);
         Call<Session> call = client.signIn(this);
         call.enqueue(responseCallback);
         return call;

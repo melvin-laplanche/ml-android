@@ -7,7 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import la.melvin.mobile.users.UserCredentials;
+import la.melvin.mobile.users.models.UserCredentials;
 import la.melvin.mobile.utils.Validation;
 
 import static org.hamcrest.Matchers.is;

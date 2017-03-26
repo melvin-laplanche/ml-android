@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#5D4037</color>
     <color name="colorAccent">#536DFE</color>
 
+    <color name="ic_background">#11AEF5</color>
+
     <!-- Fonts -->
     <color name="font_light_on_white">#B3B3B3</color>
     <color name="font_regular_on_white">#555555</color>

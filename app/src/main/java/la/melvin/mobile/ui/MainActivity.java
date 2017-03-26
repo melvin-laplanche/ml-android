@@ -7,7 +7,7 @@ import android.view.MenuItem;
 
 import la.melvin.mobile.R;
 import la.melvin.mobile.ui.helpers.ActivityTransition;
-import la.melvin.mobile.users.LoginActivity;
+import la.melvin.mobile.users.ui.LoginActivity;
 
 public class MainActivity extends BaseActivity {
 

@@ -1,4 +1,4 @@
-package la.melvin.mobile.users;
+package la.melvin.mobile.users.ui;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -15,17 +15,22 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import la.melvin.mobile.DoneCallback;
 import la.melvin.mobile.R;
-import la.melvin.mobile.api.API;
 import la.melvin.mobile.api.APIError;
+import la.melvin.mobile.api.BasicResponse;
 import la.melvin.mobile.databinding.ActivityLoginBinding;
 import la.melvin.mobile.ui.BaseActivity;
 import la.melvin.mobile.ui.helpers.ActivityTransition;
 import la.melvin.mobile.ui.helpers.BasicMotionEvent;
 import la.melvin.mobile.ui.helpers.HideCircular;
 import la.melvin.mobile.ui.helpers.RevealCircular;
+import la.melvin.mobile.users.models.Session;
+import la.melvin.mobile.users.models.UserCredentials;
 import la.melvin.mobile.utils.Validation;
+import retrofit2.Retrofit;
 
 import static la.melvin.mobile.R.id.email;
 
@@ -35,6 +40,9 @@ import static la.melvin.mobile.R.id.email;
  */
 public class LoginActivity extends BaseActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
+
+    @Inject
+    Retrofit mRetrofit;
 
     // Form Fields
     private EditText mEmail;
@@ -55,8 +63,8 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         addActionbar();
 
-        ActivityLoginBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-        binding.setCreds(mCreds);
+        injectDependencies();
+        bindData();
 
         mMainLayout = findViewById(R.id.main_layout);
 
@@ -85,6 +93,15 @@ public class LoginActivity extends BaseActivity {
                 return false;
             }
         });
+    }
+
+    private void injectDependencies() {
+        getApp().getApiComponent().inject(this);
+    }
+
+    private void bindData() {
+        ActivityLoginBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        binding.setCreds(mCreds);
     }
 
     /**
@@ -128,7 +145,7 @@ public class LoginActivity extends BaseActivity {
             showLoader(new BasicMotionEvent(e), new DoneCallback() {
                 @Override
                 public void done() {
-                    mCreds.SignIn(new API.BasicResponse<Session>(getBaseContext()) {
+                    mCreds.SignIn(mRetrofit, new BasicResponse<Session>(getBaseContext()) {
                         @Override
                         public void onSuccess(Session body) {
                             Snackbar.make(mMainLayout, "Worked", Snackbar.LENGTH_LONG).show();

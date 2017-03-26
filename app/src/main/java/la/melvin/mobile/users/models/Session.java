@@ -1,4 +1,4 @@
-package la.melvin.mobile.users;
+package la.melvin.mobile.users.models;
 
 import com.google.gson.annotations.SerializedName;
 

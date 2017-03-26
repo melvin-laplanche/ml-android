@@ -77,6 +77,10 @@ public class BaseActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    protected App getApp() {
+        return (App) getApplication();
+    }
+
     protected void onDestroy() {
         clearReferences();
         Analytics.send();

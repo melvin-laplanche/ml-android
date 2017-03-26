@@ -2,6 +2,14 @@ package la.melvin.mobile.api;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.IOException;
+import java.lang.annotation.Annotation;
+
+import okhttp3.ResponseBody;
+import retrofit2.Converter;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 /**
  * Created by melvin on 3/11/17.
  */
@@ -26,6 +34,25 @@ public class APIError {
     public APIError(int statusCode, String message) {
         this.mStatusCode = statusCode;
         this.mMessage = message;
+    }
+
+    public static APIError parseError(Retrofit retrofit, Response<?> response) {
+        Converter<ResponseBody, APIError> converter =
+                retrofit.responseBodyConverter(APIError.class, new Annotation[0]);
+
+        APIError error;
+        int status = response.code();
+
+        try {
+            error = converter.convert(response.errorBody());
+        } catch (IOException e) {
+            error = new APIError();
+            error.setMessage("Something went wrong");
+            status = 500;
+        }
+
+        error.setStatusCode(status);
+        return error;
     }
 
     public int GetStatusCode() {
