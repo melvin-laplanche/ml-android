@@ -4,6 +4,8 @@ package la.melvin.mobile.users.models;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.google.gson.annotations.SerializedName;
+
 import la.melvin.mobile.R;
 import la.melvin.mobile.utils.Validation;
 
@@ -16,7 +18,10 @@ public class UserCredentials {
     public static final int ERR_EMAIL_INVALID = 1;
     public static final int ERR_PASSWORD_INVALID = 10;
 
+    @SerializedName("email")
     private String mEmail;
+
+    @SerializedName("password")
     private String mPassword;
 
     public UserCredentials(String email, String password) {
