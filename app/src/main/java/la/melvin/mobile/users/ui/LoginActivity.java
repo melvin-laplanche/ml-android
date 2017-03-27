@@ -18,16 +18,18 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import la.melvin.mobile.DoneCallback;
 import la.melvin.mobile.R;
 import la.melvin.mobile.api.APIError;
-import la.melvin.mobile.api.BasicResponse;
 import la.melvin.mobile.databinding.ActivityLoginBinding;
 import la.melvin.mobile.ui.BaseActivity;
 import la.melvin.mobile.ui.helpers.ActivityTransition;
 import la.melvin.mobile.ui.helpers.BasicMotionEvent;
 import la.melvin.mobile.ui.helpers.HideCircular;
 import la.melvin.mobile.ui.helpers.RevealCircular;
+import la.melvin.mobile.users.UserApiRequests;
 import la.melvin.mobile.users.models.Session;
 import la.melvin.mobile.users.models.UserCredentials;
 import la.melvin.mobile.utils.Validation;
@@ -44,17 +46,25 @@ public class LoginActivity extends BaseActivity {
     Retrofit mRetrofit;
 
     // Form Fields
-    @BindView(R.id.email) EditText mEmail;
-    @BindView(R.id.password) EditText mPassword;
-    @BindView(R.id.main_layout) View mMainLayout;
+    @BindView(R.id.email)
+    EditText mEmail;
+    @BindView(R.id.password)
+    EditText mPassword;
+    @BindView(R.id.main_layout)
+    View mMainLayout;
 
     // Action buttons
-    @BindView(R.id.sign_in_button) View mSignInButton;
+    @BindView(R.id.sign_in_button)
+    View mSignInButton;
 
     // Loader
-    @BindView(R.id.loader_view) FrameLayout mLoaderView;
+    @BindView(R.id.loader_view)
+    FrameLayout mLoaderView;
     private boolean mIsLoading;
     private BasicMotionEvent mLatestEvent;
+
+    // Observers
+    private Disposable mSignInObserver;
 
     private UserCredentials mCreds = new UserCredentials();
 
@@ -66,12 +76,11 @@ public class LoginActivity extends BaseActivity {
 
         bindAndInject();
 
-
         mSignInButton.setOnTouchListener((View v, MotionEvent e) -> {
             if (!mIsLoading && e.getAction() == MotionEvent.ACTION_UP) {
-                    signIn(v, e);
-                }
-                return true;
+                signIn(v, e);
+            }
+            return true;
         });
 
         mPassword.setOnEditorActionListener((textView, id, keyEvent) -> {
@@ -130,29 +139,27 @@ public class LoginActivity extends BaseActivity {
      */
     public void signIn(View view, @Nullable MotionEvent e) {
         if (validateLocal()) {
-            showLoader(new BasicMotionEvent(e), new DoneCallback() {
-                @Override
-                public void done() {
-                    mCreds.SignIn(mRetrofit, new BasicResponse<Session>(getBaseContext()) {
-                        @Override
-                        public void onSuccess(Session body) {
-                            Snackbar.make(mMainLayout, "Worked", Snackbar.LENGTH_LONG).show();
-                        }
+            showLoader(new BasicMotionEvent(e), () -> {
+                mSignInObserver = mRetrofit.create(UserApiRequests.class)
+                        .signIn(mCreds)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe((Session sess) -> {
+                                    Snackbar.make(mMainLayout, "Worked", Snackbar.LENGTH_LONG).show();
+                                },
+                                (Throwable t) -> {
+                                    APIError err = APIError.parseError(this, mRetrofit, t);
 
-                        @Override
-                        public void onError(APIError err) {
-                            Snackbar.make(mMainLayout, "Couldn't login with the provided credentials", Snackbar.LENGTH_LONG).show();
-                        }
+                                    String errMessage = getString(R.string.sign_in_failed);
+                                    int status = err.GetStatusCode();
+                                    if (status == APIError.INTERNAL_ERROR || status == APIError.SERVER_ERROR) {
+                                        errMessage = err.GetMessage();
+                                    }
 
-                        @Override
-                        public void onComplete() {
-                            hideLoader();
-                        }
-                    });
-                }
+                                    Snackbar.make(mMainLayout, errMessage, Snackbar.LENGTH_LONG).show();
+                                    hideLoader();
+                                });
             });
         }
-
     }
 
     @OnClick(R.id.sign_up_button)
@@ -184,6 +191,15 @@ public class LoginActivity extends BaseActivity {
             }
         }).start();
         setStatusBarColor(getWindow(), color);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (mSignInObserver != null) {
+            mSignInObserver.dispose();
+        }
     }
 }
 

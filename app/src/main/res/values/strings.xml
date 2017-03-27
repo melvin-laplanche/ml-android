@@ -23,4 +23,5 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="internal_error">No internet connection</string>
     <string name="prompt_name">Full name</string>
+    <string name="sign_in_failed">Couldn\'t login with the provided credentials</string>
 </resources>

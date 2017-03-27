@@ -4,9 +4,11 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -30,6 +32,13 @@ public class ApiModule {
 
     @Provides
     @Singleton
+    RxJava2CallAdapterFactory provideRxJavaCallAdapter() {
+        return RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io());
+    }
+
+
+    @Provides
+    @Singleton
     OkHttpClient provideOkHttpClient(HttpLoggingInterceptor logger) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.addInterceptor(logger);
@@ -38,11 +47,12 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    Retrofit provideRetrofit(OkHttpClient okHttpClient) {
+    Retrofit provideRetrofit(OkHttpClient okHttpClient, RxJava2CallAdapterFactory rxCallAdapter) {
         return new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(mBaseUrl)
                 .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(rxCallAdapter)
                 .build();
     }
 }
