@@ -1,11 +1,14 @@
 package la.melvin.mobile.api;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.util.Locale;
 
 import la.melvin.mobile.R;
 import okhttp3.ResponseBody;
@@ -19,6 +22,8 @@ import retrofit2.Retrofit;
  */
 
 public class APIError {
+    public static final String TAG = APIError.class.getCanonicalName();
+
     public static final int INTERNAL_ERROR = -1;
     public static final int BAD_REQUEST = 400;
     public static final int UNAUTHORIZED = 401;
@@ -41,28 +46,47 @@ public class APIError {
     }
 
     public static APIError parseError(Context ctx, Retrofit retrofit, Throwable t) {
+        Exception failedWithException = null;
+
         // Check if the failure comes from the API
         if (t instanceof HttpException) {
             Converter<ResponseBody, APIError> converter =
                     retrofit.responseBodyConverter(APIError.class, new Annotation[0]);
 
             Response res = ((HttpException) t).response();
-            APIError error;
-            int status = res.code();
 
+            // Extract the request info
+            int status = res.code();
+            String url = res.raw().request().url().toString();
+            String rawMessage = "Something went wrong";
+            String reqID = res.headers().get("X-Request-Id");
+
+            APIError error;
             try {
                 error = converter.convert(res.errorBody());
+                rawMessage = error.getMessage();
             } catch (IOException e) {
+                // For some reason the parsing failed
                 error = new APIError();
                 error.setMessage("Something went wrong");
                 status = 500;
+                failedWithException = e;
+            }
+            error.setStatusCode(status);
 
-                // TODO(melvin): send that to crashlytics with the content of res.errorBody()
+            // Log the error
+            String logMsg = String.format(Locale.US,
+                    "Request failed for %s with code %d and message %s. req_id: %s",
+                    url, status, rawMessage, reqID);
+            Log.e(TAG, logMsg);
+
+            // if a bug occurred we send it to Crashlytics
+            if (failedWithException != null) {
+                Crashlytics.log(logMsg);
+                Crashlytics.logException(failedWithException);
             }
 
-            error.setStatusCode(status);
             return error;
-
         }
 
         // internal error, maybe there's no internet connection?
@@ -70,7 +94,7 @@ public class APIError {
         return new APIError(APIError.INTERNAL_ERROR, msg);
     }
 
-    public int GetStatusCode() {
+    public int getStatusCode() {
         return mStatusCode;
     }
 
@@ -78,7 +102,7 @@ public class APIError {
         this.mStatusCode = statusCode;
     }
 
-    public String GetMessage() {
+    public String getMessage() {
         return mMessage;
     }
 

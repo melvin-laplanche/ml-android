@@ -150,9 +150,9 @@ public class LoginActivity extends BaseActivity {
                                     APIError err = APIError.parseError(this, mRetrofit, t);
 
                                     String errMessage = getString(R.string.sign_in_failed);
-                                    int status = err.GetStatusCode();
+                                    int status = err.getStatusCode();
                                     if (status == APIError.INTERNAL_ERROR || status == APIError.SERVER_ERROR) {
-                                        errMessage = err.GetMessage();
+                                        errMessage = err.getMessage();
                                     }
 
                                     Snackbar.make(mMainLayout, errMessage, Snackbar.LENGTH_LONG).show();
