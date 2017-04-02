@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -23,8 +25,9 @@ import io.reactivex.disposables.Disposable;
 import la.melvin.mobile.DoneCallback;
 import la.melvin.mobile.R;
 import la.melvin.mobile.api.APIError;
-import la.melvin.mobile.databinding.ActivityLoginBinding;
+import la.melvin.mobile.databinding.FragmentSignInBinding;
 import la.melvin.mobile.ui.BaseActivity;
+import la.melvin.mobile.ui.BaseFragment;
 import la.melvin.mobile.ui.helpers.ActivityTransition;
 import la.melvin.mobile.ui.helpers.BasicMotionEvent;
 import la.melvin.mobile.ui.helpers.HideCircular;
@@ -36,11 +39,8 @@ import la.melvin.mobile.utils.Validation;
 import retrofit2.Retrofit;
 
 
-/**
- * A login screen that offers login via email/password.
- */
-public class LoginActivity extends BaseActivity {
-    private static final String TAG = LoginActivity.class.getSimpleName();
+public class SignInFragment extends BaseFragment {
+    static public final String TAG = SignInFragment.class.getSimpleName();
 
     @Inject
     Retrofit mRetrofit;
@@ -68,14 +68,30 @@ public class LoginActivity extends BaseActivity {
 
     private UserCredentials mCreds = new UserCredentials();
 
+    public SignInFragment() {
+        // Required empty public constructor
+    }
+
+    public static SignInFragment newInstance() {
+        return new SignInFragment();
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        addActionbar();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        FragmentSignInBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_in, container, false);
+        View view = binding.getRoot();
 
-        bindAndInject();
+        // Let's bind everything
+        binding.setCreds(mCreds);
+        ButterKnife.bind(this, view);
+        getApp().getApiComponent().inject(this);
 
+        setListeners();
+        return view;
+    }
+
+    protected void setListeners() {
         mSignInButton.setOnTouchListener((View v, MotionEvent e) -> {
             if (!mIsLoading && e.getAction() == MotionEvent.ACTION_UP) {
                 signIn(v, e);
@@ -92,15 +108,6 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
-    private void bindAndInject() {
-        getApp().getApiComponent().inject(this);
-
-        ActivityLoginBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
-        binding.setCreds(mCreds);
-
-        ButterKnife.bind(this);
-    }
-
     /**
      * Validates the data provided by the user before sending them to the API
      */
@@ -113,13 +120,13 @@ public class LoginActivity extends BaseActivity {
         View focusView = null;
         Validation val;
 
-        if ((val = mCreds.isPasswordValid(this)) != null && !val.isValid()) {
+        if ((val = mCreds.isPasswordValid(this.getActivity())) != null && !val.isValid()) {
             mPassword.setError(val.getMessage());
             focusView = mPassword;
             cancel = true;
         }
 
-        if ((val = mCreds.isEmailValid(this)) != null && !val.isValid()) {
+        if ((val = mCreds.isEmailValid(this.getActivity())) != null && !val.isValid()) {
             mEmail.setError(val.getMessage());
             focusView = mEmail;
             cancel = true;
@@ -147,7 +154,7 @@ public class LoginActivity extends BaseActivity {
                                     Snackbar.make(mMainLayout, "Worked", Snackbar.LENGTH_LONG).show();
                                 },
                                 (Throwable t) -> {
-                                    APIError err = APIError.parseError(this, mRetrofit, t);
+                                    APIError err = APIError.parseError(getActivity(), mRetrofit, t);
 
                                     String errMessage = getString(R.string.sign_in_failed);
                                     int status = err.getStatusCode();
@@ -164,7 +171,7 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.sign_up_button)
     public void signUp(View v) {
-        new ActivityTransition(SignUpActivity.class).setSource(this).start();
+        new ActivityTransition(SignUpActivity.class).setSource(getActivity()).start();
     }
 
     /**
@@ -175,7 +182,7 @@ public class LoginActivity extends BaseActivity {
         new HideCircular(mLoaderView).addMotionEvent(mLatestEvent).start();
         mIsLoading = false;
         mLatestEvent = null;
-        setStatusBarColor(getWindow(), R.color.colorPrimaryDark);
+        BaseActivity.setStatusBarColor(getActivity().getWindow(), R.color.colorPrimaryDark);
     }
 
     public void showLoader(BasicMotionEvent e, final DoneCallback animComplete) {
@@ -183,18 +190,18 @@ public class LoginActivity extends BaseActivity {
         mIsLoading = true;
         int color = R.color.action_dark;
 
-        mLoaderView.setBackgroundColor(ContextCompat.getColor(this, color));
+        mLoaderView.setBackgroundColor(ContextCompat.getColor(getActivity(), color));
         new RevealCircular(mLoaderView).addMotionEvent(e).addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 animComplete.done();
             }
         }).start();
-        setStatusBarColor(getWindow(), color);
+        BaseActivity.setStatusBarColor(getActivity().getWindow(), color);
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
 
         if (mSignInObserver != null) {
@@ -202,4 +209,3 @@ public class LoginActivity extends BaseActivity {
         }
     }
 }
-

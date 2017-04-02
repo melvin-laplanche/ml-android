@@ -3,7 +3,7 @@ package la.melvin.mobile.api;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import la.melvin.mobile.users.ui.LoginActivity;
+import la.melvin.mobile.users.ui.SignInFragment;
 
 /**
  * Created by melvin on 3/19/17.
@@ -12,5 +12,5 @@ import la.melvin.mobile.users.ui.LoginActivity;
 @Singleton
 @Component(modules = {ApiModule.class})
 public interface ApiComponent {
-    void inject(LoginActivity activity);
+    void inject(SignInFragment fragment);
 }

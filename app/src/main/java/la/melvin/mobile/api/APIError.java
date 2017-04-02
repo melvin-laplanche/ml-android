@@ -22,7 +22,7 @@ import retrofit2.Retrofit;
  */
 
 public class APIError {
-    public static final String TAG = APIError.class.getCanonicalName();
+    private static final String TAG = APIError.class.getCanonicalName();
 
     public static final int INTERNAL_ERROR = -1;
     public static final int BAD_REQUEST = 400;
