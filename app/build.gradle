@@ -21,7 +21,7 @@ android {
         applicationId "la.melvin.mobile"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 1
+        versionCode new Date().format("yyMMddhhmm").toInteger()
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -29,6 +29,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            // Seed up gradle by preventing crashlytics to update the build ID in dev
+            ext.alwaysUpdateBuildId = false
         }
     }
     flavorDimensions "mode"
@@ -38,6 +42,7 @@ android {
         }
         orchid {
             applicationId "la.melvin.orchid"
+            versionCode 1
         }
     }
     dataBinding {
