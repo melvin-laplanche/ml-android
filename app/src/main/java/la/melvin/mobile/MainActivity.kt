@@ -1,4 +1,4 @@
-package la.melvin.android
+package la.melvin.mobile
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity

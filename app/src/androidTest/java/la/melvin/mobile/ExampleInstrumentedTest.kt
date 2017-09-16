@@ -1,4 +1,4 @@
-package la.melvin.android
+package la.melvin.mobile
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("la.melvin.android", appContext.packageName)
+        assertEquals("la.melvin.mobile", appContext.packageName)
     }
 }

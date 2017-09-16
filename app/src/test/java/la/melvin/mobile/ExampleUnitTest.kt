@@ -1,4 +1,4 @@
-package la.melvin.android
+package la.melvin.mobile
 
 import org.junit.Test
 
