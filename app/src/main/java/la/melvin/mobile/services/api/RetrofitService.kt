@@ -1,4 +1,4 @@
-package la.melvin.mobile.services.apiservice
+package la.melvin.mobile.services.api
 
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
@@ -10,9 +10,9 @@ import java.util.concurrent.TimeUnit
 
 
 /**
- * Created by melvin on 9/16/17.
+ * RetrofitService is a rest client used to query REST APIs
  */
-class RetrofitService(mBaseApiUrl: String) : ApiService {
+class RetrofitService(mBaseApiUrl: String) {
     var mRetrofit: Retrofit
 
 
@@ -30,7 +30,7 @@ class RetrofitService(mBaseApiUrl: String) : ApiService {
                 .build()
     }
 
-    override fun <T> create(service: Class<T>): T {
+    fun <T> create(service: Class<T>): T {
         return mRetrofit.create(service)
     }
 }
