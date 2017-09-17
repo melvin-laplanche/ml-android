@@ -19,3 +19,15 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+# kodein
+-keepattributes Signature
+# retrofit
+-dontwarn okio.**
+-dontwarn javax.annotation.**
+# moshi
+-keepclasseswithmembers class * {
+    @com.squareup.moshi.* <methods>;
+}
+-keep @com.squareup.moshi.JsonQualifier interface *
+# okhttp
+-dontwarn okhttp3.**
