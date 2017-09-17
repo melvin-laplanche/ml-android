@@ -24,6 +24,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            // Speed up gradle by preventing crashlytics to update the build ID in dev
+            ext.alwaysUpdateBuildId = false
+        }
     }
     flavorDimensions "mode"
     productFlavors {
