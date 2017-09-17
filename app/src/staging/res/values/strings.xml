@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Melvin Laplanche</string>
-    <string name="api_domain">http://api.melvin.la</string>
+    <string name="api_domain">http://api-orchid.melvin.la</string>
 </resources>
