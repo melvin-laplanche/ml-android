@@ -2,6 +2,8 @@ package la.melvin.mobile
 
 import android.app.Application
 import com.github.salomonbrys.kodein.*
+import la.melvin.mobile.services.activityswitcher.ActivitySwitcher
+import la.melvin.mobile.services.activityswitcher.ActivityTransition
 import la.melvin.mobile.services.api.RetrofitService
 import la.melvin.mobile.services.api.UserRetrofitService
 import la.melvin.mobile.services.crashreporting.CrashReporting
@@ -17,5 +19,6 @@ class App : Application(), KodeinAware {
 
         bind<CrashReporting>() with singleton { CrashlyticsReporter(this@App) }
         bind<UserApiService>() with singleton { UserRetrofitService(apiService) }
+        bind<ActivitySwitcher>() with provider { ActivityTransition() }
     }
 }
