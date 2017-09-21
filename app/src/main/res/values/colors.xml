@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#00A0B4</color>
     <color name="colorAccent">#FFEB3B</color>
     <color name="colorTextPrimary">#ffffff</color>
+
+
+    <color name="icon_active_focused_color">@color/colorPrimary</color>
+    <color name="icon_active_unfocused_color">@color/primary_text_default_material_light</color>
 </resources>
