@@ -24,7 +24,7 @@ class AboutActivity : KodeinAppCompatActivity() {
         userApiService.getFeatured()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        { user -> setBackgroundImage(user) },
+                        { user -> setUserData(user) },
                         { err -> print(err.message) }
                 )
 
@@ -66,12 +66,13 @@ class AboutActivity : KodeinAppCompatActivity() {
         })
     }
 
-    // setBackgroundImage sets the background image using the profile picture of a user
-    fun setBackgroundImage(user: User) {
+    // setUserData sets the header's data using a user object
+    fun setUserData(user: User) {
         GlideApp.with(this)
                 .load(user.picture)
                 .centerCrop()
                 .into(profilePicture)
+        fullName.text = user.fullName()
     }
 
     // setTabColor sets the right color of a tab depending if it's active or not

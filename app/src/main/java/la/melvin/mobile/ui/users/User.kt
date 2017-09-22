@@ -17,4 +17,8 @@ class User {
     var facebook_username: String? = null
     var twitter_username: String? = null
     var is_featured = false
+
+    fun fullName(): String {
+        return first_name + " " + last_name
+    }
 }
