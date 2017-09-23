@@ -67,7 +67,7 @@ class AboutActivity : KodeinAppCompatActivity() {
     }
 
     // setUserData sets the header's data using a user object
-    fun setUserData(user: User) {
+    private fun setUserData(user: User) {
         GlideApp.with(this)
                 .load(user.picture)
                 .centerCrop()
@@ -80,16 +80,16 @@ class AboutActivity : KodeinAppCompatActivity() {
         if (tab != null) {
             val isSelected = selected ?: tab.isSelected
 
-            var alpha = R.integer.icon_active_unfocused_alpha
+            var alpha = R.integer.active_unfocused_alpha
             var iconColor = R.color.icon_active_unfocused_color
 
             if (isSelected) {
-                alpha = R.integer.icon_active_focused_alpha
+                alpha = R.integer.active_focused_alpha
                 iconColor = R.color.icon_active_focused_color
             }
 
-            tab.icon?.alpha = resources.getInteger(alpha)
-            tab.icon?.setColorFilter(ContextCompat.getColor(this, iconColor), PorterDuff.Mode.SRC_IN)
+            tab.icon?.mutate()?.alpha = resources.getInteger(alpha)
+            tab.icon?.mutate()?.setColorFilter(ContextCompat.getColor(this, iconColor), PorterDuff.Mode.SRC_IN)
         }
     }
 }
