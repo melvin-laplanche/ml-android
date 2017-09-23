@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="icon_active_focused_alpha">222</integer>
-    <integer name="icon_active_unfocused_alpha">138</integer>
+    <integer name="active_focused_alpha">222</integer>
+    <integer name="active_unfocused_alpha">138</integer>
+    <integer name="placeholder_alpha">25</integer>
 </resources>

@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="cell_height">72dp</dimen>
+
+    <item name="active_focused_alpha" format="float" type="dimen">0.87</item>
+    <item name="active_unfocused_alpha" format="float" type="dimen">0.54</item>
+    <item name="placeholder_alpha" format="float" type="dimen">0.1</item>
 </resources>
