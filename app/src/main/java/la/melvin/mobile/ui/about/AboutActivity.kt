@@ -23,6 +23,7 @@ class AboutActivity : KodeinAppCompatActivity() {
         // Fetch the background image
         userApiService.getFeatured()
                 .observeOn(AndroidSchedulers.mainThread())
+                .take(1)
                 .subscribe(
                         { user -> setUserData(user) },
                         { err -> print(err.message) }

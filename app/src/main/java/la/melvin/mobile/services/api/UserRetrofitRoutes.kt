@@ -8,6 +8,6 @@ import retrofit2.http.GET
  * UserRetrofitRoutes describes all the api routes to manage users
  */
 interface UserRetrofitRoutes {
-    @GET("/users/featured")
+    @GET("users/featured")
     fun getFeatured(): Observable<User>
 }

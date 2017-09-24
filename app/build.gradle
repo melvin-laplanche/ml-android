@@ -64,6 +64,7 @@ dependencies {
 
     // Kotlin support
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     // Crash reporter
     compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {

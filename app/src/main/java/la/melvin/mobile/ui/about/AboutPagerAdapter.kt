@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter
  */
 
 class AboutPagerAdapter(manager: FragmentManager, items: List<AboutTab>) : FragmentPagerAdapter(manager) {
-    val mTabs = items
+    private val mTabs = items
 
     override fun getCount(): Int {
         return mTabs.size

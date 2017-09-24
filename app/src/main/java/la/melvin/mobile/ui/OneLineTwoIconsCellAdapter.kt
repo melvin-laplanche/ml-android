@@ -9,39 +9,41 @@ import la.melvin.mobile.R
 
 /**
  * Adapter to render a list of basic cell with one icon on the left, a text, and an icon on the right
- * A null content for a cell will display a placeholder
  */
-class OneLineTwoIconsCellAdapter(cells: List<OneLineTwoIconsCell>, totalPlaceholder: Int = 0) : RecyclerView.Adapter<OneLineTwoIconsCellAdapter.ViewHolder>() {
+class OneLineTwoIconsCellAdapter(private val items: List<OneLineTwoIconsCell>, totalPlaceholder: Int = 0) : RecyclerView.Adapter<OneLineTwoIconsCellAdapter.ViewHolder>() {
     private val VT_REGULAR = 0
     private val VT_PLACEHOLDER = 1
 
-    private val items: List<OneLineTwoIconsCell>
-    private var hasRealData = true
+    private var placeholders: MutableList<OneLineTwoIconsCell> = mutableListOf()
+    private var onClickListener: OnClickListener? = null
 
     init {
-        if (cells.isEmpty() && totalPlaceholder > 0) {
-            var mutableItems = mutableListOf<OneLineTwoIconsCell>()
-            for (i in 1.rangeTo(totalPlaceholder)) {
-                mutableItems.add(OneLineTwoIconsCell.getPlaceholder())
+        if (items.isEmpty() && totalPlaceholder > 0) {
+            for (i in 0.rangeTo(totalPlaceholder)) {
+                placeholders.add(OneLineTwoIconsCell.getPlaceholder())
             }
-            items = mutableItems
-            hasRealData = false
-        } else {
-            items = cells
         }
     }
 
+    fun setOnClickListerner(l: OnClickListener) {
+        onClickListener = l
+    }
+
+    private fun usePlaceholders(): Boolean {
+        return items.isEmpty() && placeholders.isNotEmpty()
+    }
+
     override fun getItemViewType(position: Int): Int {
-        return if (hasRealData) VT_REGULAR else VT_PLACEHOLDER
+        return if (usePlaceholders()) VT_PLACEHOLDER else VT_REGULAR
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return if (usePlaceholders()) placeholders.size else items.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        if (hasRealData) {
-            holder?.bind(items[position])
+        if (!usePlaceholders()) {
+            holder?.bind(items[position], onClickListener)
         }
     }
 
@@ -58,12 +60,15 @@ class OneLineTwoIconsCellAdapter(cells: List<OneLineTwoIconsCell>, totalPlacehol
     }
 
 
-    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(cell: OneLineTwoIconsCell) {
+    class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+        fun bind(cell: OneLineTwoIconsCell, listener: OnClickListener?) {
             view.leftIcon.visibility = View.INVISIBLE
             view.rightIcon.visibility = View.INVISIBLE
-
             view.label.text = cell.label
+            view.setOnClickListener { view ->
+                listener?.onItemClick(view, adapterPosition)
+            }
+
 
             if (cell.leftIcon != null) {
                 view.leftIcon.setImageResource(cell.leftIcon)
@@ -73,7 +78,16 @@ class OneLineTwoIconsCellAdapter(cells: List<OneLineTwoIconsCell>, totalPlacehol
             if (cell.rightIcon != null) {
                 view.rightIcon.setImageResource(cell.rightIcon)
                 view.rightIcon.visibility = View.VISIBLE
+
+                view.rightIcon.setOnClickListener { view ->
+                    listener?.onRightIconClick(view, adapterPosition)
+                }
             }
         }
+    }
+
+    interface OnClickListener {
+        fun onItemClick(view: View, position: Int)
+        fun onRightIconClick(view: View, position: Int)
     }
 }
