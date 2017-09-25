@@ -15,6 +15,7 @@ import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_contact.*
 import la.melvin.mobile.FragmentInstancer
 import la.melvin.mobile.R
+import la.melvin.mobile.ui.BaseAdapter
 import la.melvin.mobile.ui.OneLineTwoIconsCell
 import la.melvin.mobile.ui.OneLineTwoIconsCellAdapter
 import la.melvin.mobile.ui.users.User
@@ -24,7 +25,7 @@ import la.melvin.mobile.ui.users.UserApiService
 /**
  *
  */
-class ContactFragment : KodeinSupportFragment(), OneLineTwoIconsCellAdapter.OnClickListener {
+class ContactFragment : KodeinSupportFragment(), BaseAdapter.OnClickListener {
     private val TAG: String = ContactFragment::class.simpleName!!
 
     private val TYPE_PHONE = 0
@@ -46,7 +47,7 @@ class ContactFragment : KodeinSupportFragment(), OneLineTwoIconsCellAdapter.OnCl
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         val adapter = OneLineTwoIconsCellAdapter(contactInfo, 4)
-        adapter.setOnClickListerner(this)
+        adapter.setOnClickListener(this)
 
         recycleView.layoutManager = LinearLayoutManager(context)
         recycleView.adapter = adapter

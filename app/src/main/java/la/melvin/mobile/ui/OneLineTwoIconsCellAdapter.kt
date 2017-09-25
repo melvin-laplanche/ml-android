@@ -10,55 +10,15 @@ import la.melvin.mobile.R
 /**
  * Adapter to render a list of basic cell with one icon on the left, a text, and an icon on the right
  */
-class OneLineTwoIconsCellAdapter(private val items: List<OneLineTwoIconsCell>, totalPlaceholder: Int = 0) : RecyclerView.Adapter<OneLineTwoIconsCellAdapter.ViewHolder>() {
-    private val VT_REGULAR = 0
-    private val VT_PLACEHOLDER = 1
-
-    private var placeholders: MutableList<OneLineTwoIconsCell> = mutableListOf()
-    private var onClickListener: OnClickListener? = null
-
-    init {
-        if (items.isEmpty() && totalPlaceholder > 0) {
-            for (i in 0.rangeTo(totalPlaceholder)) {
-                placeholders.add(OneLineTwoIconsCell.getPlaceholder())
-            }
-        }
+class OneLineTwoIconsCellAdapter(items: List<OneLineTwoIconsCell>, totalPlaceholder: Int = 0) : BaseAdapter<OneLineTwoIconsCell>(items, totalPlaceholder) {
+    override fun onBindHolder(holder: RecyclerView.ViewHolder, item: OneLineTwoIconsCell) {
+        (holder as ViewHolder).bind(item, onClickListener)
     }
 
-    fun setOnClickListerner(l: OnClickListener) {
-        onClickListener = l
-    }
-
-    private fun usePlaceholders(): Boolean {
-        return items.isEmpty() && placeholders.isNotEmpty()
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return if (usePlaceholders()) VT_PLACEHOLDER else VT_REGULAR
-    }
-
-    override fun getItemCount(): Int {
-        return if (usePlaceholders()) placeholders.size else items.size
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        if (!usePlaceholders()) {
-            holder?.bind(items[position], onClickListener)
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-        val layout = when (viewType) {
-            VT_PLACEHOLDER -> R.layout.list_one_line_item_with_two_icons_placeholder
-            else -> {
-                R.layout.list_one_line_item_with_two_icons
-            }
-        }
-
-        val v = LayoutInflater.from(parent?.context).inflate(layout, parent, false)
+    override fun onCreateHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
+        val v = LayoutInflater.from(parent?.context).inflate(R.layout.list_one_line_item_with_two_icons, parent, false)
         return ViewHolder(v)
     }
-
 
     class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(cell: OneLineTwoIconsCell, listener: OnClickListener?) {
@@ -68,7 +28,6 @@ class OneLineTwoIconsCellAdapter(private val items: List<OneLineTwoIconsCell>, t
             view.setOnClickListener { view ->
                 listener?.onItemClick(view, adapterPosition)
             }
-
 
             if (cell.leftIcon != null) {
                 view.leftIcon.setImageResource(cell.leftIcon)
@@ -84,10 +43,5 @@ class OneLineTwoIconsCellAdapter(private val items: List<OneLineTwoIconsCell>, t
                 }
             }
         }
-    }
-
-    interface OnClickListener {
-        fun onItemClick(view: View, position: Int)
-        fun onRightIconClick(view: View, position: Int)
     }
 }
