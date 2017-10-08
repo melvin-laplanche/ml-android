@@ -10,6 +10,10 @@
         <xliff:g example="2016" id="from">%s</xliff:g> - <xliff:g example="present" id="to">%s</xliff:g> (<xliff:g example="2 yrs 1 mo" id="total">%s</xliff:g>)
     </string>
 
+    <string name="date_from_to_short">
+        <xliff:g example="2016" id="from">%s</xliff:g> - <xliff:g example="present" id="to">%s</xliff:g>
+    </string>
+
     <string name="date_present">present</string>
 
     <string name="elapsed_time">

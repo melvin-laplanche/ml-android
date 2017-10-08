@@ -44,7 +44,7 @@ class ExperienceAdapter(items: List<Experience>, totalPlaceholder: Int = 0) : Ba
             val from = DateFormat.format("MMM yyyy", item.startDate)
             val to = if (item.endDate != null) DateFormat.format("MMM yyyy", item.endDate) else view.context.getString(R.string.date_present)
 
-            view.line1.text = item.organization.name
+            view.line1.text = item.organization.short_name ?: item.organization.name
             view.line2.text = item.job_title
             view.line3.text = view.context.getString(R.string.date_from_to, from, to, elapsedTime)
 

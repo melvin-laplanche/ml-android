@@ -1,6 +1,7 @@
 package la.melvin.mobile.services.api
 
 import io.reactivex.Observable
+import la.melvin.mobile.ui.about.EducationSearchResults
 import la.melvin.mobile.ui.about.ExperienceSearchResults
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -11,4 +12,7 @@ import retrofit2.http.Query
 interface AboutRetrofitRoutes {
     @GET("about/experience")
     fun getAllExperience(@Query("page") page: Int? = null, @Query("per_page") perPage: Int? = null): Observable<ExperienceSearchResults>
+
+    @GET("about/education")
+    fun getAllEducation(@Query("page") page: Int? = null, @Query("per_page") perPage: Int? = null): Observable<EducationSearchResults>
 }

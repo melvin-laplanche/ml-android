@@ -7,4 +7,5 @@ import io.reactivex.Observable
  */
 interface AboutApiService {
     fun getAllExperience(page: Int? = null, perPage: Int? = null): Observable<ExperienceSearchResults>
+    fun getAllEducation(page: Int? = null, perPage: Int? = null): Observable<EducationSearchResults>
 }

@@ -33,7 +33,7 @@ class AboutActivity : KodeinAppCompatActivity() {
         val tabs = listOf(
                 AboutTab(ContactFragment, R.drawable.ic_person),
                 AboutTab(ExperienceFragment, R.drawable.ic_business_center),
-                AboutTab(ContactFragment, R.drawable.ic_school))
+                AboutTab(EducationFragment, R.drawable.ic_school))
 
 
         // Create an adapter and link the pager and the tabLayout together
