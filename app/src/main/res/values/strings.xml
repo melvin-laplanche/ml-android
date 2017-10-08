@@ -1,7 +1,28 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Melvin Laplanche</string>
     <string name="api_domain">http://api.melvin.la/</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="date_from_to">
+        <xliff:g example="2016" id="from">%s</xliff:g> - <xliff:g example="present" id="to">%s</xliff:g> (<xliff:g example="2 yrs 1 mo" id="total">%s</xliff:g>)
+    </string>
+
+    <string name="date_present">present</string>
+
+    <string name="elapsed_time">
+        <xliff:g example="2 yrs" id="years">%s</xliff:g> <xliff:g example="1 mo" id="months">%s</xliff:g>
+    </string>
+
+    <plurals name="year_short">
+        <item quantity="one">1 yr</item>
+        <item quantity="other">%d yrs</item>
+    </plurals>
+
+    <plurals name="month_short">
+        <item quantity="one">1 mo</item>
+        <item quantity="other">%d mos</item>
+    </plurals>
 </resources>

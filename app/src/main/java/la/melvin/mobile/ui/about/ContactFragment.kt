@@ -47,7 +47,7 @@ class ContactFragment : KodeinSupportFragment(), BaseAdapter.OnClickListener {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         val adapter = OneLineTwoIconsCellAdapter(contactInfo, 4)
-        adapter.setOnClickListener(this)
+        adapter.onClickListener = this
 
         recycleView.layoutManager = LinearLayoutManager(context)
         recycleView.adapter = adapter

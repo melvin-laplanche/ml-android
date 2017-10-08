@@ -32,7 +32,7 @@ class AboutActivity : KodeinAppCompatActivity() {
         // list of all the tabs in the order they will be displayed
         val tabs = listOf(
                 AboutTab(ContactFragment, R.drawable.ic_person),
-                AboutTab(ContactFragment, R.drawable.ic_business_center),
+                AboutTab(ExperienceFragment, R.drawable.ic_business_center),
                 AboutTab(ContactFragment, R.drawable.ic_school))
 
 
